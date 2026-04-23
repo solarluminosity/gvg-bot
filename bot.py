@@ -5,7 +5,6 @@ import json
 import os
 from datetime import datetime
 
-# Берём токен из Railway Variables
 TOKEN = os.getenv("TOKEN")
 
 intents = discord.Intents.default()
@@ -85,6 +84,9 @@ async def on_ready():
 
 @bot.tree.command(name="gvg_create", description="Создать запись на ГВГ")
 async def gvg_create(interaction: discord.Interaction, title: str, date: str, time_msk: str):
+
+    await interaction.response.defer()  # 🔥 фикс ошибки "не отвечает"
+
     raid_id = str(len(data) + 1)
 
     dt = datetime.strptime(f"{date} {time_msk}", "%d.%m.%Y %H:%M")
@@ -109,7 +111,7 @@ async def gvg_create(interaction: discord.Interaction, title: str, date: str, ti
 
     await msg.create_thread(name=f"Обсуждение {title}")
 
-    await interaction.response.send_message("Создано!", ephemeral=True)
+    await interaction.followup.send("Запись создана ✅", ephemeral=True)
 
 
 @tasks.loop(minutes=1)
