@@ -5,7 +5,8 @@ import json
 import os
 from datetime import datetime
 
-TOKEN = "PUT_YOUR_TOKEN_HERE"
+# Берём токен из Railway Variables
+TOKEN = os.getenv("TOKEN")
 
 intents = discord.Intents.default()
 intents.members = True
